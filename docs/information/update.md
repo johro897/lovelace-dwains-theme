@@ -5,7 +5,7 @@
 If there is a update of Dwains Theme here is how to install it.
 
 ### Step 1 - Download Dwains Theme latest release
-1. Download the [latest release from the release page](https://github.com/dwainscheeren/lovelace-dwains-theme/releases).
+1. Download the [latest release from the release page][link](https://github.com/dwainscheeren/lovelace-dwains-theme/releases).
 
 **Each release has information on that page with how to install it as an update!**
 
@@ -38,7 +38,24 @@ Version numbering explained (MAJOR.MINOR.PATCH):
 
 # Changelog
 
-## Update 1.5.0 (Coming soon)
+## Update 2.0.0 (Coming soon) 🎉
+
+Note: Dwains Theme has been renamed to Dwains Dashboard!
+
+To update to Dwains Dashboard 2.0.0 you first need to remove your 1.* version of Dwains Theme follow **all** steps below (Don't worry we will keep your existing Dwains Theme config and addons, these will automatic work in 2.0.0):
+
+With /config/ I mean the folder where your whole HA config is.
+
+1. Make a backup of your current HA.
+2. Go to your /config/ folder and rename the folder **dwains-theme** to **dwains-dashboard**.
+3. Go to your /config/ folder and remove the file **dwains-theme-lovelace-yaml**.
+4. Go inside the folder /config/dwains-dashboard and remove the following folders **plugins**, **resources**, **translations**, **views**, but make sure you **keep the folders 'configs' and the folder 'addons'!**.
+5. Go to the folder /config/themes and remove the files **dwains-theme-black.yaml**, **dwains-theme-dark.yaml**, **dwains-theme-light.yaml**, **dwains-theme-white.yaml**.
+6. Go to the folder /config/www and remove the folder **dwains-theme**.
+7. Go to the folder /config/packages and remove the folder **dwains-theme**.
+8. Go to the folder /config/custom_components and remove the folder **dwains-theme**.
+9. Reboot your HA, Dwains Theme 1.* should now be fully removed except the _config_ folder _/config/dwains-dashboard/.._
+10. Install Dwains Dashboard 2.0.0 as explained [here](linkje).
 
 To do:
 Re-merge this https://github.com/dwainscheeren/lovelace-dwains-theme/pull/191 into 1.5
@@ -46,10 +63,37 @@ Safety docs https://github.com/dwainscheeren/lovelace-dwains-theme/pull/165
 Vibration sensor docs https://github.com/dwainscheeren/lovelace-dwains-theme/pull/188
 
 #### New Features:
+* Vibration Sensor @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/188)
+* Add weather page and link to it from weather widget. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/187)
+* New Safety Devices @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/155)
+* Add Tracking to Map @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/185)
+* Correct batteries with string values. Add color gradient to batteries. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/186)
 
 #### Changes:
+* **Changed the name Dwains Theme to Dwains Dashboard.**
+* **Completly refactored all the code of Dwains Dashboard.**
+* **Use webpack now to compile my own Dwains Lovelace cards, no external load of Litelement through unkpg.com. This means you can use Dwains Dashboard now fully offline from the internet without problems. It's also a lot faster as the custom cards for my dashboard are now compiled and optimized.**
+* **You don't have to change/touch any of your existing HA files/config to setup and use Dwain Dashboard. Setting up Dwains Dashboard is now all done automatic during installation.**
+* **The `picture_path` key in persons.yaml for the photo of the person is now DEPRECATED! I  now load the default picture automatic which you can set yourself in HA if you go to persons.**
+* Removed the use of HA themes for my Dashboard. My theme is now only used inside my dashboard and not outside of it.
+* Created 2 full new cards for headings and headers to replace the yaml partials.
+* My dashboard is no longer dependent on the following third party addons: card-mod, auto-entities, custom header, state-switch and browser_mod. You can remove these from your HA setup if you don't use them in an other dashboard or Dwains Dashboard addon. I replaced them all with new made Dwains Lovelace Cards.
+* Show the Media Player icon if the state is "on" or "playing" instead of just "on". @Benjy04 [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/196)
+* Page Entities: Add toggle for switch and light, and more info on hold. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/194)
+* If you have no temperature sensor but only a climate sensor set for a room, the page remains blank. @Klumpke [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/191)
+* Fix weather link when small screen. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/190)
+* Homepage icons. Adds icon config for device and cover.
+Modifies homepage device for Lock, Safety, Light, Cover, and Device icons based on state. Modifies rooms for Cover and Device icons based on state. Fixes room cover text for devices without position.Uses different icon in rooms to show group of lights. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/189)
+* Safety docs @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/165)
+* only show cover position slider if position flag is set @Xetoxyc [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/171)
+* Add temperature to climate view. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/173)
+* Really all batteries @patman15 [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/174)
+* Hold press doesn't open the more info @jakezp [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/177)
+* Remove hard navigation link @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/184)
 
+...
 
+---
 
 ## Update 1.4.1
 
@@ -66,11 +110,13 @@ Follow the normal update manual (top of this page). Please follow all steps.
 
 * Made all 3 info cards on a climate page equal width when you don't have a climate entity.
 * Added a space in the header in a room for doors and windows.
-* Add light unavailable state @Klumpe (https://github.com/dwainscheeren/lovelace-dwains-theme/pull/143)
-* 01.homepage.yaml - show active tab in other langs @Benjy04 (https://github.com/dwainscheeren/lovelace-dwains-theme/pull/144)
-* Remove Duplicate key - app-header-background-color @bacco007 (https://github.com/dwainscheeren/lovelace-dwains-theme/pull/145)
-* Fix for light colors when off and unavailable @roblandry (https://github.com/dwainscheeren/lovelace-dwains-theme/pull/153)
-* Fix media_player background color. Fixes #151 @roblandry (https://github.com/dwainscheeren/lovelace-dwains-theme/pull/154)
+* Add light unavailable state @Klumpe [link](https://github.com/dwainscheeren/lovelace-dwains-theme/pull/143)
+* 01.homepage.yaml - show active tab in other langs @Benjy04 [link](https://github.com/dwainscheeren/lovelace-dwains-theme/pull/144)
+* Remove Duplicate key - app-header-background-color @bacco007 [link](https://github.com/dwainscheeren/lovelace-dwains-theme/pull/145)
+* Fix for light colors when off and unavailable @roblandry [link](https://github.com/dwainscheeren/lovelace-dwains-theme/pull/153)
+* Fix media_player background color. Fixes #151 @roblandry [link](https://github.com/dwainscheeren/lovelace-dwains-theme/pull/154)
+
+---
 
 ## Update 1.4.0
 
@@ -93,7 +139,7 @@ Follow the normal update manual (top of this page). Please follow all steps.
 #### Changes:
 
 * **BREAKING: Replaced all Font Awesome icons with Material Design Icons, so FA is no longer included in my theme. If you use rooms with Font Awesome (FAS/FAR) icons you need to replace them with Material Design (MDI) icons!! (If you want to use FA icons, please look [here](../how-tos/how-to-choose-icon.md)).**
-* **BREAKING: Calendar on the house information is removed/deprecated. Now you can use addons between the favorites and the activity. The calendar is now an addon, please take a look [here for an calendar addon](https://github.com/dwainscheeren/dwains-theme-addons/tree/master/house_information/calendar).**
+* **BREAKING: Calendar on the house information is removed/deprecated. Now you can use addons between the favorites and the activity. The calendar is now an addon, please take a look [here for an calendar addon][link](https://github.com/dwainscheeren/dwains-theme-addons/tree/master/house_information/calendar).**
 * **BREAKING: Vacuum page has changed. I removed the HACS lovelace-xiaomi-vacuum-map-card from the theme and replaced it with denysdovhan/vacuum-card. But this is card is not required. You can enable it in your vacuum settings, [take a look here](https://dwainscheeren.github.io/lovelace-dwains-theme/configuration/rooms.html#vacuum-object) on how to configure this.**
 * Created Dwains Collapse Card. I removed the swipe card from the header, now too many (state) items will collapse and can be toggled with an chevron up/down button. The swipe card plugin is no longer used and loaded by default!
 * Changed some translation loadings, because from HA 0.109 its changed.
@@ -116,7 +162,7 @@ Follow the normal update manual (top of this page). Please follow all steps.
 * Added filter 'sensor' on all batteries page, it only shows sensor entities with the word 'battery' inside it.
 * Fixed bug that custom font "Open Sans" was not loaded anymore in my theme, now it is loaded again.
 * Re-programmed Dwains Flexbox Card from scratch.
-* Merged PR lock popup [#126](https://github.com/dwainscheeren/lovelace-dwains-theme/pull/126).
+* Merged PR lock popup [#126][link](https://github.com/dwainscheeren/lovelace-dwains-theme/pull/126).
 * Some very small design changes.
 * Added page for Windows overview.
 * Added page for Doors overview.
@@ -132,6 +178,8 @@ Follow the normal update manual (top of this page). Please follow all steps.
 * Added HA (new) Media Control Card for media_players on the devices -> media players page too, so you now have a fancy card.
 * Fixed the primary color in the black and dark theme. Now text on states pages (for example) is readable again. This color was used for the navbar on iOS but this is now done by `--app-header-background-color`.
 * Removed the lovelace-xiaomi-vacuum-map-card from main resources file.
+
+---
 
 ## Update 1.3.1
 
