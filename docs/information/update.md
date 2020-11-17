@@ -1,33 +1,10 @@
 [< Go back to Home](../index.md)
 
-# Updating Dwains Theme 
+# Updating Dwains Dashboard
 
-If there is a update of Dwains Theme here is how to install it.
+If you want to upgrade your installation of Dwains Dashboard to the latest version then look below. Each update has his own "How to update to **" manual.
 
-### Step 1 - Download Dwains Theme latest release
-1. Download the [latest release from the release page][link](https://github.com/dwainscheeren/lovelace-dwains-theme/releases).
-
-**Each release has information on that page with how to install it as an update!**
-
-### Step 2 - Extract & move the download
-
-1. Unzip the file you just downloaded. 
-
-2. Make a backup of the folder `dwains-theme/configs` and `dwains-theme/addons` this is very important!
-
-3. If you use the `custom_resources.yaml file`, then backup that one too (`dwains-theme/resources/custom_resources.yaml`)
-
-3. Remove the folder `dwains-theme` in your main HA folder.
-
-4. Copy the content of the folder you just downloaded to the root of your Home Assistant installation.
-
-5. Copy the `configs` and `addons` folders back to to the folder `dwains-theme`. If you use the `custom_resources.yaml` file, then copy this back into dwains-theme/resources.
-
-### Step 3 - Reboot Home Assistant
-
-Reboot Home Assistant! After this check if you got the new version number in More page -> Theme settings (bottom of page).
-
-## Version info
+### Versioning info
 
 Version numbering explained (MAJOR.MINOR.PATCH):
 1. MAJOR version: when there are big and incompatible changes.
@@ -38,36 +15,85 @@ Version numbering explained (MAJOR.MINOR.PATCH):
 
 # Changelog
 
-## Update 2.0.0 (Coming soon) 🎉
+## Update 2.0.0 🎉
 
 Note: Dwains Theme has been renamed to Dwains Dashboard!
 
-To update to Dwains Dashboard 2.0.0 you first need to remove your 1.* version of Dwains Theme follow **all** steps below (Don't worry we will keep your existing Dwains Theme config and addons, these will automatic work in 2.0.0):
+### How to update to 2.0:
 
-With /config/ I mean the folder where your whole HA config is.
+You can only update to 2.0 if you have 1.4 installed.
 
-1. Make a backup of your current HA.
+The update process is a little bit complicated but I tried to make it as easy as possible. I made splitted the upgrade guide into 5 sections. If you experience any issues during the installation of 2.0 you can get live personal assistant from me, [Dwains Dashboard Discord Server](https://discord.gg/7yt64uX)
+
+*Hint: With /config/ I mean the folder where your whole HA config is.*
+
+**Section 1 - Remove existing Dwains Theme 1.***
+
+*To update to Dwains Dashboard 2.0.0 you first need to remove your 1.* version of Dwains Theme follow **all** steps below (Don't worry we will keep your existing Dwains Theme config and addons, these will automatic work in 2.0.0), after that we need to modify your config files and your addons.*
+1. Make a backup of your current HA setup.
 2. Go to your /config/ folder and rename the folder **dwains-theme** to **dwains-dashboard**.
 3. Go to your /config/ folder and remove the file **dwains-theme-lovelace-yaml**.
-4. Go inside the folder /config/dwains-dashboard and remove the following folders **plugins**, **resources**, **translations**, **views**, but make sure you **keep the folders 'configs' and the folder 'addons'!**.
-5. Go to the folder /config/themes and remove the files **dwains-theme-black.yaml**, **dwains-theme-dark.yaml**, **dwains-theme-light.yaml**, **dwains-theme-white.yaml**.
-6. Go to the folder /config/www and remove the folder **dwains-theme**.
-7. Go to the folder /config/packages and remove the folder **dwains-theme**.
-8. Go to the folder /config/custom_components and remove the folder **dwains-theme**.
-9. Reboot your HA, Dwains Theme 1.* should now be fully removed except the _config_ folder _/config/dwains-dashboard/.._
-10. Install Dwains Dashboard 2.0.0 as explained [here](linkje).
+4. If you use any custom resources then backup the file /config/dwains-dashboard/resources/custom_resources.yaml somewhere safe. You need to add these back after installing 2.0.
+5. Go inside the folder /config/dwains-dashboard and remove the following folders: **plugins**, **resources**, **translations**, **views**. Make sure you **keep the folders 'configs' and the folder 'addons'!**.
+6. Go to the folder /config/themes and remove the files **dwains-theme-black.yaml**, **dwains-theme-dark.yaml**, **dwains-theme-light.yaml** and **dwains-theme-white.yaml**.
+7. Go to the folder /config/www and remove the folder **dwains-theme**.
+8. Go to the folder /config/packages and remove the folder **dwains-theme**.
+9. Go to the folder /config/custom_components and remove the folder **dwains-theme**.
 
-To do:
-Re-merge this https://github.com/dwainscheeren/lovelace-dwains-theme/pull/191 into 1.5
-Safety docs https://github.com/dwainscheeren/lovelace-dwains-theme/pull/165
-Vibration sensor docs https://github.com/dwainscheeren/lovelace-dwains-theme/pull/188
+**Section 2- Some small changes to your existing Dwains Theme config files**
+
+The files `scenes.yaml` and `cameras.yaml` in your dwains dashboard configs needs to be changed. If you use them go to /config/dwains-dashboard/configs and open them.
+1. The file `cameras.yaml` needs to be changed like explained in [this screenshot](../images/camerasyaml2-0.jpg).
+2. The file `scenes.yaml` needs to be changed like explained in [this screenshot](../images/scenesyaml2-0.jpg).
+
+**Section 3 - Adjust your addons**
+
+If you have any addons installed follow this step, otherwise skip this step!
+
+Open up the folder /config/dwains-dashboard/configs and check, we need to make some adjustments to these files.
+1. If you use addons the name of the folder dwains-theme has changed to dwains-dashboard so for check all your config files. For example rename `path: 'dwains-theme/addons/rooms/hello-room/page.yaml'` to `path: 'dwains-dashboard/addons/rooms/hello-room/page.yaml'`
+2. Some addons use an include to heading.yaml, this file is deprecated.
+Change the code as explained in [this screenshot](../images/heading2-0.jpg).
+3. The following variables have been renamed, so if you use them, please rename them.
+`_d_t_config` to `_dd_config`, `_d_t_trans` to `_dd_trans`, `_d_t_icons` to `_dd_icons` and `_d_t_global` to `_dd_global`
+
+*In 2.0 there isn't a `custom_resources.yaml` file anymore for any custom/third party cards. You will need to add them back by hand after installing 2.0. Go to HA Configuration -> Lovelace Dashboards and click in the top on Resources. Here you can click on the "+" sign bottom right and add all your custom cards you first had in `dwains-theme/resources/custom_resources.yaml`.*
+
+**Section 4 - Dynamic_page.yaml is deprecated**
+
+If you use the `dynamic_page.yaml` in your current installation I have some good and bad news. The bad news is that it is deprecated, the good news is I created a new function for this to put as many custom pages in the main navigation bar as you want!!
+You must copy the `addon:` part you had in `dwains-theme/configs/dynamic_page.yaml` into the `addon:` part in `dwains-dashboard/configs/more_page.yaml`. Then add the key `main_menu: 'true'` to the addon. Then this addon will show up in your main navigation bar!
+([Read more here](https://dwainscheeren.github.io/dwains-lovelace-dashboard/addons/more_page.html#more-page-addons))
+
+**Section 5 - Reboot HA**
+
+Reboot your Home Assistant. Dwains Theme 1.* should now be fully removed. Now we can install 2.0 with your existing config.
+
+**Section 6 - Install Dwains Dashboard 2.0**
+
+Install Dwains Dashboard 2.0 as explained [here](../getting-started/installation).
+
+#### Breaking changes:
+* Dynamic_page.yaml is deprecated! You need to copy your addon to an more_page addon. Now you can add `main_menu: true` to an more_page addon to show it in the main navigation bar! [Read more here](https://dwainscheeren.github.io/dwains-lovelace-dashboard/addons/more_page.html#more-page-addons)
+* Partial heading.yaml is deprecated! Replace it with a new card called `dwains-heading-card` see [this screenshot](../images/heading2-0.jpg).
+* `cameras.yaml` and `scenes.yaml` have new structure! Please change these files to the new standard. The file `cameras.yaml` needs to be changed like explained in [this screenshot](../images/camerasyaml2-0.jpg).The file `scenes.yaml` needs to be changed like explained in [this screenshot](../images/scenesyaml2-0.jpg).
+* The following variables have been renamed, so if you use them, please rename them.
+`_d_t_config` to `_dd_config`, `_d_t_trans` to `_dd_trans`, `_d_t_icons` to `_dd_icons` and `_d_t_global` to `_dd_global`
+* If you use addons the name of the folder dwains-theme has changed to dwains-dashboard so for check all your config files. For example rename `path: 'dwains-theme/addons/rooms/hello-room/page.yaml'` to `path: 'dwains-dashboard/addons/rooms/hello-room/page.yaml'`
 
 #### New Features:
-* Vibration Sensor @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/188)
+* **Dwains Themes are now only applied to the Dwains Dashboard itself, this means that the colors are only used in the dashboard and not outside of it.** You now can also use the default HA theme if you want to create a complete own theme. And you can also now set a own primary color (to replace the blue color) for icons etc. These settings can be found under Options in the integration Dwains Dashboard on your integrations page.
+* You can set a own name for the dashboard in the integration options.
+* You can set a own sidebar icon for the dashboard in the integration options.
+* You can hide the cameras and scenes page from the main navigation bar
+* You can add own pages to the main navigation bar, see more_page addons and the `main_menu: 'true'` part.
+* Vibration Sensor support for rooms @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/188)
 * Add weather page and link to it from weather widget. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/187)
 * New Safety Devices @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/155)
+You now can add specific devices to a room like for example a smoke sensor. When this sensor gets triggered you get a warning inside your main header and in the room card. See `safety:` in the [room docs](https://dwainscheeren.github.io/dwains-lovelace-dashboard/configuration/rooms.html#rooms-information).
 * Add Tracking to Map @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/185)
 * Correct batteries with string values. Add color gradient to batteries. @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/186)
+* You can set if you want to see open, closer or partly_closed covers in the header (as state). Use `show_covers: closed` in `global.yaml` (defaults to open).
 
 #### Changes:
 * **Changed the name Dwains Theme to Dwains Dashboard.**
@@ -75,6 +101,7 @@ Vibration sensor docs https://github.com/dwainscheeren/lovelace-dwains-theme/pul
 * **Use webpack now to compile my own Dwains Lovelace cards, no external load of Litelement through unkpg.com. This means you can use Dwains Dashboard now fully offline from the internet without problems. It's also a lot faster as the custom cards for my dashboard are now compiled and optimized.**
 * **You don't have to change/touch any of your existing HA files/config to setup and use Dwain Dashboard. Setting up Dwains Dashboard is now all done automatic during installation.**
 * **The `picture_path` key in persons.yaml for the photo of the person is now DEPRECATED! I  now load the default picture automatic which you can set yourself in HA if you go to persons.**
+* **You now can use Dwains Dashboard together with HKI (Homekit Infused)**
 * Removed the use of HA themes for my Dashboard. My theme is now only used inside my dashboard and not outside of it.
 * Created 2 full new cards for headings and headers to replace the yaml partials.
 * My dashboard is no longer dependent on the following third party addons: card-mod, auto-entities, custom header, state-switch and browser_mod. You can remove these from your HA setup if you don't use them in an other dashboard or Dwains Dashboard addon. I replaced them all with new made Dwains Lovelace Cards.
@@ -90,8 +117,7 @@ Modifies homepage device for Lock, Safety, Light, Cover, and Device icons based 
 * Really all batteries @patman15 [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/174)
 * Hold press doesn't open the more info @jakezp [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/177)
 * Remove hard navigation link @roblandry [link](https://github.com/dwainscheeren/dwains-lovelace-dashboard/pull/184)
-
-...
+* ... A LOT OF OTHER SMALL THINGS .. Which I forgot to add here haha. 2.0 is just huge!
 
 ---
 

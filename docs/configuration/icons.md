@@ -9,7 +9,6 @@
 * [persons.yaml](persons.md)
 * [icons.yaml](icons.md)
 * [more_page.yaml](more_page.md)
-* [dynamic_page.yaml](dynamic_page.md)
 
 ---
 
@@ -17,7 +16,7 @@
 
 **This file is required but can be empty!**
 
-With this file you can override the default icons that are loaded in Dwains Theme.
+With this file you can override the default icons that are loaded in Dwains Dashboard.
 
 [Take a look here](../how-tos/how-to-choose-icon.md) on how to choose an icon and how to install Font Awesome.
 
