@@ -29,13 +29,27 @@
             padding: true
             cards:
               {% for entity in _dd_config.cameras["entities"] %}
-              - type: picture-entity
-                {% if _dd_config.cameras["live_view"] and _dd_config.cameras["live_view"] == 'false' %}
-                camera_view: auto
+                {% if entity["arlo"] %}                
+              - type: 'custom:aarlo-glance'
+                entity: {{ entity }}                
+                show:
+                  - motion
+                  - sound
+                  - snapshot
+                  - battery_level
+                  - signal_strength
+                  - captured_today
+                  - image_date
+                image_click: play
                 {% else %}
+              - type: picture-entity
+                  {% if _dd_config.cameras["live_view"] and _dd_config.cameras["live_view"] == 'false' %}
+                camera_view: auto
+                  {% else %}
                 camera_view: live
-                {% endif %}
+                  {% endif %}
                 entity: {{ entity }}
+                {% endif %}  
               {% else %}
               - type: markdown
                 content: {{ _dd_trans.cameras.not_defined }}
