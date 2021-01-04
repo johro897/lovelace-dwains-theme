@@ -28,10 +28,9 @@
             items_classes: 'col-xs-12 col-sm-6 col-md-6 col-lg-6'
             padding: true
             cards:
-              {% for entity in _dd_config.cameras["entities"] %}
-                {% if entity["arlo"] %}                
-              - type: 'custom:aarlo-glance'
-                entity: {{ entity }}                
+            {% for camera in _dd_config.cameras["entities"] %}
+              {% if camera["arlo"] %}
+              - type: custom:aarlo-glance
                 show:
                   - motion
                   - sound
@@ -40,18 +39,22 @@
                   - signal_strength
                   - captured_today
                   - image_date
+                top_title: false
+                top_status: false
+                top_date: false
                 image_click: play
-                {% else %}
+                entity: {{ camera["entity"] }}
+              {% else %}              
               - type: picture-entity
-                  {% if _dd_config.cameras["live_view"] and _dd_config.cameras["live_view"] == 'false' %}
+                {% if _dd_config.cameras["live_view"] and _dd_config.cameras["live_view"] == 'false' %}
                 camera_view: auto
-                  {% else %}
+                {% else %}
                 camera_view: live
-                  {% endif %}
-                entity: {{ entity }}
-                {% endif %}  
-              {% else %}
+                {% endif %}
+                entity: {{ camera["entity"] }}
+              {% endif %}
+            {% else %}
               - type: markdown
                 content: {{ _dd_trans.cameras.not_defined }}
-              {% endfor %}
+            {% endfor %}              
 {% endif %}
